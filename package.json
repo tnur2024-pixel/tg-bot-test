@@ -1,3 +1,4 @@
+
 {
   "name": "tg-bot-test",
   "version": "1.0.0",
@@ -7,6 +8,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.66.0"
   }
 }

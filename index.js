@@ -5,32 +5,45 @@ import { fileURLToPath } from "url";
 
 const app = express();
 const PORT = process.env.PORT || 10000;
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
-// ===== Path setup (ES Module fix) =====
+// path setup
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ===== Serve static files (index.html) =====
+// static files (index.html)
 app.use(express.static(__dirname));
 
-// ===== Telegram Bot =====
-const BOT_TOKEN = process.env.BOT_TOKEN;
-const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+// Telegram Bot (WEBHOOK MODE)
+const bot = new TelegramBot(BOT_TOKEN);
 
-console.log("Bot started");
+// Render URL
+const WEBHOOK_URL = "https://tg-bot-test-2.onrender.com";
 
-// ===== /start command =====
+// webhook set
+bot.setWebHook(`${WEBHOOK_URL}/bot${BOT_TOKEN}`);
+
+console.log("Bot webhook set");
+
+// webhook endpoint
+app.post(`/bot${BOT_TOKEN}`, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
+
+// body parser
+app.use(express.json());
+
+// start command
 bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-
-  bot.sendMessage(chatId, "👇 Click the button to open Mini App", {
+  bot.sendMessage(msg.chat.id, "👇 Open Mini App", {
     reply_markup: {
       inline_keyboard: [
         [
           {
-            text: "▶️ Open Mini App",
+            text: "Open Mini App 🚀",
             web_app: {
-              url: "https://tg-bot-test-2.onrender.com"
+              url: WEBHOOK_URL
             }
           }
         ]
@@ -39,12 +52,11 @@ bot.onText(/\/start/, (msg) => {
   });
 });
 
-// ===== Root route =====
+// root
 app.get("/", (req, res) => {
   res.send("Server is running successfully 🚀");
 });
 
-// ===== Start server =====
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running on port", PORT);
 });

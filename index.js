@@ -30,7 +30,7 @@ bot.onText(/\/start/, (msg) => {
           {
             text: "▶️ Open Mini App",
             web_app: {
-              url: "https://YOUR-RENDER-URL.onrender.com/index.html"
+              url: "https://tg-bot-test-2.onrender.com"
             }
           }
         ]

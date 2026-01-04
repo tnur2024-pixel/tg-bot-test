@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,12 @@
   <title>Telegram Mini App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Monetag Telegram Mini App Script -->
-  <script src="https://tg.monetag.com/js/monetag.js"></script>
+  <!-- ✅ Monetag Telegram Mini App OFFICIAL INIT -->
+  <script>
+    window.monetag = window.monetag || {};
+    window.monetag.queue = window.monetag.queue || [];
+  </script>
+  <script async src="https://tg.monetag.com/js/tg.min.js"></script>
 
   <style>
     body {
@@ -14,7 +19,7 @@
       padding: 0;
       background: #0f0f0f;
       font-family: Arial, sans-serif;
-      color: #fff;
+      color: #ffffff;
       text-align: center;
     }
 
@@ -24,7 +29,7 @@
 
     .post-image {
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       border-radius: 12px;
       margin-bottom: 12px;
     }
@@ -32,19 +37,19 @@
     .title {
       font-size: 18px;
       font-weight: bold;
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
 
     .watch-btn {
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       padding: 14px;
       font-size: 16px;
       font-weight: bold;
       border: none;
       border-radius: 10px;
       background: #ff0050;
-      color: #fff;
+      color: #ffffff;
       cursor: pointer;
     }
 
@@ -57,29 +62,30 @@
 
 <body>
   <div class="container">
-    <!-- Fixed Image -->
+
+    <!-- 🔹 FIXED IMAGE (replace with your Blogger image link) -->
     <img
       class="post-image"
-      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEinp5BrbgrGXlkGq5tPPkTgn2REOvSlDBg37qChqg2mJjRlv9Ssc1Ae4HTsnc9YO0H-G0PSAjbwg2yYiFj7zRo6lGqcuIZysxD6dj0bLWssH6_LqoWFYukle4dHT4uVywg1SpHMGkoOP7rw4MczWcBa918T6osqEBiYii2twQroHLe6Fa7q39QjfliXXFsu/s659/Screenshot_20251222-192231.jpg"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/REPLACE_WITH_YOUR_IMAGE.jpg"
       alt="Post Image"
     />
 
-    <!-- Title -->
+    <!-- 🔹 TITLE -->
     <div class="title">
       Cute BBY Viral Video Part 1
     </div>
 
-    <!-- Watch Ads Button -->
+    <!-- 🔹 WATCH ADS BUTTON -->
     <button id="watchAdsBtn" class="watch-btn">
       Watch Ads (3/3)
     </button>
+
   </div>
 
-  <!-- Ads Logic -->
+  <!-- ✅ MONETAG ADS LOGIC -->
   <script>
     let adsLeft = 3;
     const ZONE_ID = "10416174";
-
     const btn = document.getElementById("watchAdsBtn");
 
     btn.addEventListener("click", () => {
@@ -88,10 +94,10 @@
         return;
       }
 
-      if (window.monetag && window.monetag.show) {
-        window.monetag.show({
+      if (window.monetag && window.monetag.queue) {
+        window.monetag.queue.push({
           zone: ZONE_ID,
-          onComplete: () => {
+          callback: function () {
             adsLeft--;
 
             if (adsLeft > 0) {
@@ -100,15 +106,13 @@
               btn.innerText = "Ads Completed ✅";
               btn.disabled = true;
             }
-          },
-          onError: () => {
-            alert("Ad failed, try again");
           }
         });
       } else {
-        alert("Monetag not loaded");
+        alert("Monetag not loaded yet, try again");
       }
     });
   </script>
+
 </body>
 </html>

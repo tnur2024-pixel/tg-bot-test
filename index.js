@@ -6,24 +6,24 @@ import { fileURLToPath } from "url";
 const app = express();
 const PORT = process.env.PORT || 10000;
 const BOT_TOKEN = process.env.BOT_TOKEN;
+const WEBHOOK_URL = "https://tg-bot-test-2.onrender.com";
+
+// 🔹 IMPORTANT: body parser MUST be on top
+app.use(express.json());
 
 // path setup
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// static files (index.html)
+// static files
 app.use(express.static(__dirname));
 
-// Telegram Bot (WEBHOOK MODE)
+// Telegram bot (webhook mode)
 const bot = new TelegramBot(BOT_TOKEN);
 
-// Render URL
-const WEBHOOK_URL = "https://tg-bot-test-2.onrender.com";
-
-// webhook set
+// set webhook
 bot.setWebHook(`${WEBHOOK_URL}/bot${BOT_TOKEN}`);
-
-console.log("Bot webhook set");
+console.log("Webhook set");
 
 // webhook endpoint
 app.post(`/bot${BOT_TOKEN}`, (req, res) => {
@@ -31,10 +31,7 @@ app.post(`/bot${BOT_TOKEN}`, (req, res) => {
   res.sendStatus(200);
 });
 
-// body parser
-app.use(express.json());
-
-// start command
+// /start command ✅
 bot.onText(/\/start/, (msg) => {
   bot.sendMessage(msg.chat.id, "👇 Open Mini App", {
     reply_markup: {

@@ -8,7 +8,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 10000;
 const BOT_TOKEN = process.env.BOT_TOKEN;
-const WEBHOOK_URL = "https://YOUR-RENDER-URL.onrender.com"; // 🔴 change this
+const WEBHOOK_URL = "https://tg-bot-test-3.onrender.com"; // 🔴 change this
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

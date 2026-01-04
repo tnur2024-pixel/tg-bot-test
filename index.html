@@ -5,73 +5,110 @@
   <title>Telegram Mini App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Monetag Telegram Mini App Script -->
+  <script src="https://tg.monetag.com/js/monetag.js"></script>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f6f7;
       margin: 0;
+      padding: 0;
+      background: #0f0f0f;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
       padding: 15px;
     }
 
-    h2 {
-      text-align: center;
-      color: #0088cc;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-
-    .card img {
+    .post-image {
       width: 100%;
-      display: block;
-    }
-
-    .card-body {
-      padding: 12px;
+      max-width: 400px;
+      border-radius: 12px;
+      margin-bottom: 12px;
     }
 
     .title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
-    .btn {
-      display: block;
+    .watch-btn {
       width: 100%;
-      padding: 12px;
-      background: #ff9800;
-      color: #fff;
-      text-align: center;
-      border-radius: 8px;
-      text-decoration: none;
+      max-width: 400px;
+      padding: 14px;
+      font-size: 16px;
       font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      background: #ff0050;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .watch-btn:disabled {
+      background: #4caf50;
+      cursor: not-allowed;
     }
   </style>
 </head>
+
 <body>
+  <div class="container">
+    <!-- Fixed Image -->
+    <img
+      class="post-image"
+      src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/REPLACE_WITH_YOUR_IMAGE.jpg"
+      alt="Post Image"
+    />
 
-  <h2>Telegram Mini App</h2>
-
-  <div class="card">
-    <!-- FIXED IMAGE (Blogger link here) -->
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEinp5BrbgrGXlkGq5tPPkTgn2REOvSlDBg37qChqg2mJjRlv9Ssc1Ae4HTsnc9YO0H-G0PSAjbwg2yYiFj7zRo6lGqcuIZysxD6dj0bLWssH6_LqoWFYukle4dHT4uVywg1SpHMGkoOP7rw4MczWcBa918T6osqEBiYii2twQroHLe6Fa7q39QjfliXXFsu/s659/Screenshot_20251222-192231.jpg" alt="Post Image">
-
-    <div class="card-body">
-      <div class="title">
-        Cute BBY Viral Video Part 1
-      </div>
-
-      <a href="#" class="btn">
-        Watch Ads (3/3)
-      </a>
+    <!-- Title -->
+    <div class="title">
+      Cute BBY Viral Video Part 1
     </div>
+
+    <!-- Watch Ads Button -->
+    <button id="watchAdsBtn" class="watch-btn">
+      Watch Ads (3/3)
+    </button>
   </div>
 
+  <!-- Ads Logic -->
+  <script>
+    let adsLeft = 3;
+    const ZONE_ID = "10416174";
+
+    const btn = document.getElementById("watchAdsBtn");
+
+    btn.addEventListener("click", () => {
+      if (adsLeft <= 0) {
+        alert("Ads Completed ✅");
+        return;
+      }
+
+      if (window.monetag && window.monetag.show) {
+        window.monetag.show({
+          zone: ZONE_ID,
+          onComplete: () => {
+            adsLeft--;
+
+            if (adsLeft > 0) {
+              btn.innerText = `Watch Ads (${adsLeft}/3)`;
+            } else {
+              btn.innerText = "Ads Completed ✅";
+              btn.disabled = true;
+            }
+          },
+          onError: () => {
+            alert("Ad failed, try again");
+          }
+        });
+      } else {
+        alert("Monetag not loaded");
+      }
+    });
+  </script>
 </body>
 </html>
